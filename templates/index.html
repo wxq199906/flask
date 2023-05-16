@@ -9,7 +9,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
             margin: 0;
             padding: 0;
         }
@@ -38,14 +37,101 @@
 </head>
 <body>
     <h1>Dance Moves</h1>
-    <div class="dance">
-        <h2>Windmill</h2>
-        <p>The windmill is a popular b-boying move that takes practice, skill, and most of all dedication.</p>
-        <img src="{{ url_for('static', filename='windmill.png') }}" alt="Windmill Dance Move">
+   
+    <div id="danceMovesContainer"></div>
 
-    </div>
+    <script>
+        // 舞蹈动作的数据
+        const danceMoves = [
+            {
+                name: "Windmill",
+                description: "The windmill is a popular b-boying move that takes practice, skill, and dedication.",
+                image: "/static/windmill.png",
+            },
+            {
+                name: "Flare",
+                description: "开始时在地面上，以两只手臂和脚部的支撑点为基础，连续旋转身体，同时双腿在空中分开。",
+                image: "/static/Flare.png",
+            },
+            {
+                name: "Headspin",
+                description: "以头部为支撑点，在地面上进行旋转，保持平衡。",
+                image: "/static/Headspin.png",
+            },
+            {
+                name: "Airflare",
+                description: "从地面上开始，通过连续的翻滚和旋转在空中移动。",
+                image: "/static/Airflare.png",
+            }, 
+            {
+                name: "Swipe",
+                description: "从地面上开始，通过连续的横扫动作在地面上滑行。",
+                image: "/static/Swipe.png",
+            },
+            {
+                name: "Step Out",
+                description: "站立位置，双脚分开，然后将一只脚向一侧迈出，随后另一只脚也迈出。",
+                image: "/static/Step Out.png",
+            },
+            {
+                name: "Kick Out",
+                description: "站立位置，一只脚向侧面踢出，随后回到原位，另一只脚再进行相同的动作。",
+                image: "/static/Kick Out.png",
+            },
+            
+            {
+                name: "Shuffle Step",
+                description: "站立位置，双脚交替进行小步舞蹈，类似于快速的小步跑。",
+                image: "/static/Shuffle Step.png",
+            },
+            {
+                name: "Rocking",
+                description: "站立位置，将重心向前或向后移动，让身体摇摆前后。",
+                image: "/static/Rocking.png",
+            },
+            {
+                name: "Knee Drop",
+                description: "站立位置，双膝盖向下弯曲，然后回到原位。",
+                image: "/static/Knee Drop.png",
+            }
+        ];
 
-    <!-- Add more dance moves... -->
+        // 创建舞蹈动作元素
+        function createDanceMoveElement(danceMove) {
+            console.log("createDanceMoveElement");
+            const danceMoveElement = document.createElement("div");
+            danceMoveElement.classList.add("dance");
 
-</body>
-</html>
+            const image = document.createElement("img");    
+            image.src = danceMove.image;  //img location
+            image.alt = danceMove.name + " Dance Move";   //img alt text
+            danceMoveElement.appendChild(image);   
+
+            const heading = document.createElement("h2");
+            heading.textContent = danceMove.name;
+            danceMoveElement.appendChild(heading);
+
+            const description = document.createElement("p");
+            description.textContent = danceMove.description;
+            danceMoveElement.appendChild(description);
+
+       
+            return danceMoveElement;
+        }
+
+        // 将舞蹈动作元素添加到容器中
+        function renderDanceMoves() {
+            const danceMovesContainer = document.getElementById("danceMovesContainer");
+
+            danceMoves.forEach(function(danceMove) {
+                const danceMoveElement = createDanceMoveElement(danceMove);
+                danceMovesContainer.appendChild(danceMoveElement);
+            });
+        }
+
+        // 调用函数渲染舞蹈动作
+        renderDanceMoves();
+    </script>
+    </body>
+    </html>
+    
