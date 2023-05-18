@@ -2,42 +2,15 @@
 <html>
 <head>
     <title>Dance Moves</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
-            padding: 0;
-        }
-
-        .dance {
-            border: 1px solid black;
-            margin: 10px;
-            padding: 10px;
-            width: 600px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .dance img {
-            max-width: 100%;
-        }
-
-        .dance p {
-            width: 80%;
-            min-height: 60px;
-            margin: 0 auto;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <h1>Dance Moves</h1>
-   
+
+    <div id="searchContainer">
+        <input type="text" id="searchInput" placeholder="搜索舞蹈动作" />
+    </div>
+
     <div id="danceMovesContainer"></div>
 
     <script>
@@ -62,7 +35,7 @@
                 name: "Airflare",
                 description: "从地面上开始，通过连续的翻滚和旋转在空中移动。",
                 image: "/static/Airflare.png",
-            }, 
+            },
             {
                 name: "Swipe",
                 description: "从地面上开始，通过连续的横扫动作在地面上滑行。",
@@ -78,12 +51,12 @@
                 description: "站立位置，一只脚向侧面踢出，随后回到原位，另一只脚再进行相同的动作。",
                 image: "/static/Kick Out.png",
             },
-            
             {
                 name: "Shuffle Step",
                 description: "站立位置，双脚交替进行小步舞蹈，类似于快速的小步跑。",
                 image: "/static/Shuffle Step.png",
             },
+
             {
                 name: "Rocking",
                 description: "站立位置，将重心向前或向后移动，让身体摇摆前后。",
@@ -96,42 +69,62 @@
             }
         ];
 
-        // 创建舞蹈动作元素
-        function createDanceMoveElement(danceMove) {
-            console.log("createDanceMoveElement");
-            const danceMoveElement = document.createElement("div");
-            danceMoveElement.classList.add("dance");
+    // 创建舞蹈动作元素
+function createDanceMoveElement(danceMove) {
+    const danceMoveElement = document.createElement("div");
+    danceMoveElement.classList.add("dance");
 
-            const image = document.createElement("img");    
-            image.src = danceMove.image;  //img location
-            image.alt = danceMove.name + " Dance Move";   //img alt text
-            danceMoveElement.appendChild(image);   
+    const image = document.createElement("img");
+    image.src = danceMove.image;
+    image.alt = danceMove.name + " 舞蹈动作";
+    danceMoveElement.appendChild(image);
 
-            const heading = document.createElement("h2");
-            heading.textContent = danceMove.name;
-            danceMoveElement.appendChild(heading);
+    const heading = document.createElement("h2");
+    heading.textContent = danceMove.name;
+    heading.style.display = 'none';
+    danceMoveElement.appendChild(heading);
 
-            const description = document.createElement("p");
-            description.textContent = danceMove.description;
-            danceMoveElement.appendChild(description);
+    const description = document.createElement("p");
+    description.textContent = danceMove.description;
+    description.style.display = 'none';
+    danceMoveElement.appendChild(description);
 
-       
-            return danceMoveElement;
+    // 添加事件监听器，点击图片展开/折叠描述
+    image.addEventListener('click', function() {
+        const isHidden = heading.style.display === 'none';
+
+        if (isHidden) {
+            heading.style.display = 'block';
+            description.style.display = 'block';
+        } else {
+            heading.style.display = 'none';
+            description.style.display = 'none';
         }
+    });
 
-        // 将舞蹈动作元素添加到容器中
-        function renderDanceMoves() {
-            const danceMovesContainer = document.getElementById("danceMovesContainer");
-
-            danceMoves.forEach(function(danceMove) {
-                const danceMoveElement = createDanceMoveElement(danceMove);
-                danceMovesContainer.appendChild(danceMoveElement);
-            });
-        }
-
-        // 调用函数渲染舞蹈动作
-        renderDanceMoves();
-    </script>
-    </body>
-    </html>
+    return danceMoveElement;
+}
     
+
+function renderDanceMoves() {
+    const danceMovesContainer = document.getElementById("danceMovesContainer");
+
+    danceMoves.forEach(function(danceMove) {
+        const danceMoveElement = createDanceMoveElement(danceMove);
+        danceMovesContainer.appendChild(danceMoveElement);
+    });
+
+// 获取搜索框元素
+const searchInput = document.getElementById("searchInput");
+
+// 监听搜索框输入事件
+searchInput.addEventListener('input', renderDanceMoves);
+
+        }
+
+// 初始化舞蹈动作列表
+renderDanceMoves();
+
+</script>
+</body>
+</html>
